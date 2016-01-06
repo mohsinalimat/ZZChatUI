@@ -118,8 +118,7 @@ final class ZZInputView: UIToolbar,UITextViewDelegate{
             self.superview?.layoutIfNeeded()
             if let vc = self.responderViewController() as? ViewController{
                 vc.view.layoutIfNeeded()
-                //TODO  - 发送次数多的时候 按下第一个字母 会下沉一点---不知道为啥呀
-                vc.chatTableView.scrollToBottom(animation: false)
+                vc.chatTableView.scrollToBottom(animation: true)
             }
         }
     }
