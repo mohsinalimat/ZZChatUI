@@ -103,7 +103,7 @@ class ViewController: UIViewController {
                     
 //                    self?.chatTableView.indexPath = indexPath
                     self?.chatTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.None)
-
+                    
                     print("\(self!.dataArray.count ) ---- \(array.count)")
                     let indexPath = NSIndexPath(forRow: self!.dataArray.count - currCount - 1 , inSection: 0)
                     self?.chatTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: false)

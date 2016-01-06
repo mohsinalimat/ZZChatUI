@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		203C015B1C3CE56C00DC6FE9 /* ZZRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C015A1C3CE56C00DC6FE9 /* ZZRefreshView.swift */; };
+		203C015F1C3D031400DC6FE9 /* ZZTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C015E1C3D031400DC6FE9 /* ZZTableView.swift */; };
 		20D0D0521C3BB2970086B213 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D0D0511C3BB2970086B213 /* AppDelegate.swift */; };
 		20D0D0541C3BB2970086B213 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D0D0531C3BB2970086B213 /* ViewController.swift */; };
 		20D0D0571C3BB2970086B213 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20D0D0551C3BB2970086B213 /* Main.storyboard */; };
@@ -42,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		203C015A1C3CE56C00DC6FE9 /* ZZRefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZZRefreshView.swift; sourceTree = "<group>"; };
+		203C015E1C3D031400DC6FE9 /* ZZTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZZTableView.swift; sourceTree = "<group>"; };
 		20D0D04E1C3BB2970086B213 /* ZZChatUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZZChatUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20D0D0511C3BB2970086B213 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20D0D0531C3BB2970086B213 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +106,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		203C01591C3CE53500DC6FE9 /* ZZRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				203C015A1C3CE56C00DC6FE9 /* ZZRefreshView.swift */,
+			);
+			path = ZZRefresh;
+			sourceTree = "<group>";
+		};
 		20D0D0451C3BB2970086B213 = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +139,7 @@
 		20D0D0501C3BB2970086B213 /* ZZChatUI */ = {
 			isa = PBXGroup;
 			children = (
+				203C01591C3CE53500DC6FE9 /* ZZRefresh */,
 				20D0D0801C3BB2C30086B213 /* ZZChat */,
 				20D0D0511C3BB2970086B213 /* AppDelegate.swift */,
 				20D0D0531C3BB2970086B213 /* ViewController.swift */,
@@ -166,6 +179,7 @@
 				20D0D0891C3BC2670086B213 /* ZZRightMsgCell.swift */,
 				20D0D08B1C3BC9D90086B213 /* ZZLabel.swift */,
 				20D0D08D1C3BCA2E0086B213 /* ZZMessageView.swift */,
+				203C015E1C3D031400DC6FE9 /* ZZTableView.swift */,
 			);
 			path = ZZChat;
 			sourceTree = "<group>";
@@ -360,7 +374,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				203C015B1C3CE56C00DC6FE9 /* ZZRefreshView.swift in Sources */,
 				20D0D0881C3BBFF80086B213 /* ZZLeftMsgCell.swift in Sources */,
+				203C015F1C3D031400DC6FE9 /* ZZTableView.swift in Sources */,
 				20D0D0821C3BB2E80086B213 /* Extension+Add.swift in Sources */,
 				20D0D08E1C3BCA2E0086B213 /* ZZMessageView.swift in Sources */,
 				20D0D0541C3BB2970086B213 /* ViewController.swift in Sources */,
@@ -511,10 +527,12 @@
 			baseConfigurationReference = D01AF0E54981534659F47C21 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ZZChatUI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = im.zuber.appss.ZZChatUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -523,6 +541,7 @@
 			baseConfigurationReference = 3B8246CF49C5E22DD2BBCC23 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = ZZChatUI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = im.zuber.appss.ZZChatUI;
