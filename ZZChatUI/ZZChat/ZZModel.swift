@@ -22,11 +22,13 @@ class ZZModel: NSObject {
     
     var text:String?
     
-    static func creatMessageFromMeByText(text:String) -> ZZModel{
+    static func creatMessageFromMeByText(text:String) -> ZZChatFrame{
+        let chatFrame = ZZChatFrame()
         let model = ZZModel()
         model.text = text
         model.configMeBaseInfo()
-        return model
+        chatFrame.model = model
+        return chatFrame
     }
     
     private func configMeBaseInfo() {
@@ -38,9 +40,10 @@ class ZZModel: NSObject {
         self.headImage = UIImage(named: "headImage")
     }
     
-    static func creatRandomArray(count count:Int) -> [ZZModel] {
-        var array = [ZZModel]()
+    static func creatRandomArray(count count:Int) -> [ZZChatFrame] {
+        var array = [ZZChatFrame]()
         for _ in 0...(count) {
+            let chatFrame = ZZChatFrame()
             let model:ZZModel = ZZModel()
             model.from = random()%2==0 ? .Me:.Other
             model.userName = model.from == .Me ? "小美":"小王"
@@ -49,7 +52,8 @@ class ZZModel: NSObject {
             model.time = formatter.stringFromDate(NSDate())
             model.headImage = UIImage(named: "headImage")
             model.text = ZZModel.randomStr()
-            array.append(model)
+            chatFrame.model = model
+            array.append(chatFrame)
         }
         return array
     }

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		203C015B1C3CE56C00DC6FE9 /* ZZRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C015A1C3CE56C00DC6FE9 /* ZZRefreshView.swift */; };
 		203C015F1C3D031400DC6FE9 /* ZZTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C015E1C3D031400DC6FE9 /* ZZTableView.swift */; };
+		203C016E1C3D2FB900DC6FE9 /* ZZLeftChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C016D1C3D2FB900DC6FE9 /* ZZLeftChatCell.swift */; };
+		203C01701C3D304400DC6FE9 /* ZZChatFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C016F1C3D304400DC6FE9 /* ZZChatFrame.swift */; };
+		203C01721C3D369100DC6FE9 /* ZZRightChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C01711C3D369100DC6FE9 /* ZZRightChatCell.swift */; };
 		20D0D0521C3BB2970086B213 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D0D0511C3BB2970086B213 /* AppDelegate.swift */; };
 		20D0D0541C3BB2970086B213 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D0D0531C3BB2970086B213 /* ViewController.swift */; };
 		20D0D0571C3BB2970086B213 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20D0D0551C3BB2970086B213 /* Main.storyboard */; };
@@ -46,6 +49,9 @@
 /* Begin PBXFileReference section */
 		203C015A1C3CE56C00DC6FE9 /* ZZRefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZZRefreshView.swift; sourceTree = "<group>"; };
 		203C015E1C3D031400DC6FE9 /* ZZTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZZTableView.swift; sourceTree = "<group>"; };
+		203C016D1C3D2FB900DC6FE9 /* ZZLeftChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZZLeftChatCell.swift; sourceTree = "<group>"; };
+		203C016F1C3D304400DC6FE9 /* ZZChatFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZZChatFrame.swift; sourceTree = "<group>"; };
+		203C01711C3D369100DC6FE9 /* ZZRightChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZZRightChatCell.swift; sourceTree = "<group>"; };
 		20D0D04E1C3BB2970086B213 /* ZZChatUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZZChatUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20D0D0511C3BB2970086B213 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20D0D0531C3BB2970086B213 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +120,16 @@
 			path = ZZRefresh;
 			sourceTree = "<group>";
 		};
+		203C016C1C3D2F9300DC6FE9 /* ChatCell */ = {
+			isa = PBXGroup;
+			children = (
+				203C016D1C3D2FB900DC6FE9 /* ZZLeftChatCell.swift */,
+				203C016F1C3D304400DC6FE9 /* ZZChatFrame.swift */,
+				203C01711C3D369100DC6FE9 /* ZZRightChatCell.swift */,
+			);
+			path = ChatCell;
+			sourceTree = "<group>";
+		};
 		20D0D0451C3BB2970086B213 = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +188,7 @@
 		20D0D0801C3BB2C30086B213 /* ZZChat */ = {
 			isa = PBXGroup;
 			children = (
+				203C016C1C3D2F9300DC6FE9 /* ChatCell */,
 				20D0D0811C3BB2E80086B213 /* Extension+Add.swift */,
 				20D0D0831C3BB32E0086B213 /* ZZInputView.swift */,
 				20D0D0851C3BBA650086B213 /* ZZModel.swift */,
@@ -375,14 +392,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				203C015B1C3CE56C00DC6FE9 /* ZZRefreshView.swift in Sources */,
+				203C016E1C3D2FB900DC6FE9 /* ZZLeftChatCell.swift in Sources */,
 				20D0D0881C3BBFF80086B213 /* ZZLeftMsgCell.swift in Sources */,
 				203C015F1C3D031400DC6FE9 /* ZZTableView.swift in Sources */,
 				20D0D0821C3BB2E80086B213 /* Extension+Add.swift in Sources */,
 				20D0D08E1C3BCA2E0086B213 /* ZZMessageView.swift in Sources */,
 				20D0D0541C3BB2970086B213 /* ViewController.swift in Sources */,
+				203C01701C3D304400DC6FE9 /* ZZChatFrame.swift in Sources */,
 				20D0D0521C3BB2970086B213 /* AppDelegate.swift in Sources */,
 				20D0D08C1C3BC9D90086B213 /* ZZLabel.swift in Sources */,
 				20D0D0861C3BBA650086B213 /* ZZModel.swift in Sources */,
+				203C01721C3D369100DC6FE9 /* ZZRightChatCell.swift in Sources */,
 				20D0D0841C3BB32E0086B213 /* ZZInputView.swift in Sources */,
 				20D0D08A1C3BC2670086B213 /* ZZRightMsgCell.swift in Sources */,
 			);

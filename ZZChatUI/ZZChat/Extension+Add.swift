@@ -102,7 +102,7 @@ extension UIView {
 extension UIScrollView {
     
     func scrollToBottom(animation animation:Bool) {
-        let visibleBottomRect = CGRectMake(0, contentSize.height-1, 1, 1)
+        let visibleBottomRect = CGRectMake(animation ? 0.2:0.0, contentSize.height-1, 1, 1)
         UIView.animateWithDuration(animation ? 0.2:0.0) { () -> Void in
             self.scrollRectToVisible(visibleBottomRect, animated: true)
         }

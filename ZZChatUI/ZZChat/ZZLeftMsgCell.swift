@@ -101,7 +101,6 @@ class ZZLeftMsgCell: UITableViewCell {
         )
         imageHeightConstraint.priority = UILayoutPriorityRequired
         messageView.addConstraint(imageHeightConstraint)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

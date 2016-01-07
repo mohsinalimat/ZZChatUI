@@ -10,18 +10,25 @@ import UIKit
 
 public class ZZTableView: UITableView {
 
-    var isFresh = false
-    var indexPath:NSIndexPath?
-//    public override var contentSize:CGSize {
-//
-//        didSet{
-//            if isFresh{
-//                if let indexPath = indexPath{
-//                    
-//                }
-//            }
-//        }
-//    }
+    var fromSend = false
+    
+    public override var contentSize:CGSize{
+        didSet{
+            
+            if !fromSend{
+                if !CGSizeEqualToSize(oldValue, CGSizeZero){
+                    print("\(oldValue.height) .... \(contentSize.height)")
+                    if contentSize.height >  oldValue.height
+                    {
+                        var offset = self.contentOffset;
+                        offset.y += (contentSize.height - oldValue.height);
+                        self.contentOffset = offset;
+                    }
+                }
+            }
+        }
+    }
+
     
 }
 

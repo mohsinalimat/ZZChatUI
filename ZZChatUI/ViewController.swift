@@ -23,7 +23,7 @@ class ViewController: UIViewController {
 
     var chatTableView: ZZTableView!
     var zzinputView:ZZInputView!
-    var dataArray:[ZZModel] = []
+    var dataArray:[ZZChatFrame] = []
     
     var inputViewConstraint: Constraint? = nil
     var tableConstraint: Constraint? = nil
@@ -37,8 +37,8 @@ class ViewController: UIViewController {
         zzinputView = ZZInputView()
         self.view.addSubview(zzinputView)
         
-        self.dataArray = ZZModel.creatRandomArray(count: 10) //随机产生10条信息
-        
+        self.dataArray =  ZZModel.creatRandomArray(count: 10) //随机产生10条信息
+//      zzinputView.frame = CGRectMake(0,  self.view.zz_height-46, self.view.zz_width , 46)
         zzinputView.snp_makeConstraints { (make) -> Void in
             make.leading.trailing.equalTo(self.view)
             inputViewConstraint = make.bottom.equalTo(self.view).constraint
@@ -49,30 +49,34 @@ class ViewController: UIViewController {
             if txt == ""{
                 return
             }
+            
+            self?.chatTableView.fromSend = true  //发送 不需要修改
             self?.dataArray.append(ZZModel.creatMessageFromMeByText(txt))
-//          let indexPath = NSIndexPath(forRow:self!.dataArray.count-1, inSection: 0)
-            self?.chatTableView.reloadData()
-            self?.chatTableView.scrollToBottom(animation: true)  
+            let indexPath = NSIndexPath(forRow:self!.dataArray.count-1, inSection: 0)
+            self?.chatTableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+            self?.scrollToBottom(animated: true)
+
         }
-        
-        chatTableView = ZZTableView.init(frame: CGRectZero, style: .Plain)
+//      CGRectMake(0, 64, self.view.zz_width , self.view.zz_height-46-64)
+        chatTableView = ZZTableView(frame:CGRectZero , style: .Plain)
         chatTableView.dataSource = self
         chatTableView.delegate = self
         chatTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         chatTableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.Interactive
         self.view.addSubview(chatTableView)
+        
         chatTableView.snp_makeConstraints { (make) -> Void in
             make.leading.trailing.equalTo(self.view)
             make.top.equalTo(self.snp_topLayoutGuideTop)
             make.bottom.equalTo(zzinputView.snp_top)
         }
-//      chatTableView.frame = CGRectMake(0, 0, self.view.zz_width , self.view.zz_height-45)
+        chatTableView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+//        chatTableView.frame = CGRectMake(0, 0, self.view.zz_width , self.view.zz_height-45)
+//        chatTableView.estimatedRowHeight = 100
+//        chatTableView.rowHeight = UITableViewAutomaticDimension //自适应高度
         
-        chatTableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0)
-        chatTableView.estimatedRowHeight = 100
-        
-        chatTableView.registerClass(ZZLeftMsgCell.classForKeyedArchiver(), forCellReuseIdentifier: leftCellId)
-        chatTableView.registerClass(ZZRightMsgCell.classForKeyedArchiver(), forCellReuseIdentifier: rightCellId)
+        chatTableView.registerClass(ZZLeftChatCell.classForKeyedArchiver(), forCellReuseIdentifier: leftCellId)
+        chatTableView.registerClass(ZZRightChatCell.classForKeyedArchiver(), forCellReuseIdentifier: rightCellId)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action:"handleTouches:")
         tapGestureRecognizer.cancelsTouchesInView = false
@@ -82,54 +86,42 @@ class ViewController: UIViewController {
         zzRefreshView = ZZRefreshView(scrollView: self.chatTableView)
         self.chatTableView.addSubview(zzRefreshView)
         zzRefreshView.refresh = { [weak self] in
-//            self.dataArray.append()
+            
+            self?.chatTableView.fromSend = false  //刷新需要修改
             //延时一秒 模拟网络等待
             delay(1, completion: { () -> () in
                 let array = ZZModel.creatRandomArray(count: 10)
-                
-                let currCount = self!.dataArray.count - 1
-                var indexPaths:[NSIndexPath] = []
+//                var indexPaths:[NSIndexPath] = []
                 var i = 0
                 for arr in array{
-                    let indexPath = NSIndexPath(forRow: i, inSection: 0)
-                    indexPaths.append(indexPath)
+//                    let indexPath = NSIndexPath(forRow: i, inSection: 0)
+//                    indexPaths.append(indexPath)
                     self!.dataArray.insert(arr, atIndex: 0)
                     i++
                 }
-                
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     UIView.setAnimationsEnabled(false)
-//                    self?.chatTableView.isFresh = true
-                    
-//                    self?.chatTableView.indexPath = indexPath
-                    self?.chatTableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.None)
-                    
-                    print("\(self!.dataArray.count ) ---- \(array.count)")
-                    let indexPath = NSIndexPath(forRow: self!.dataArray.count - currCount - 1 , inSection: 0)
-                    self?.chatTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: false)
-                    self?.zzRefreshView.endRefresh()
-                    delay(0.1, completion: { () -> () in
-//                        self?.chatTableView.isFresh = false
-                    })
+                    if let strongSelf = self{
+                        strongSelf.chatTableView.reloadData()
+                        strongSelf.chatTableView.layoutIfNeeded()
+                        strongSelf.zzRefreshView.endRefresh()
+                    }
                     UIView.setAnimationsEnabled(true)
                 })
             })
 
         }
-//        let indexPath = NSIndexPath(forRow: dataArray.count-1, inSection: 0)
-//        chatTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-//        print(self.chatTableView.contentSize.height)
         //将tableview 划到底部
         self.chatTableView.contentOffset.y = self.chatTableView.contentSize.height - self.chatTableView.zz_height
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardFrameChanged:"), name: UIKeyboardWillChangeFrameNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardFrameChanged:"), name:UIKeyboardWillChangeFrameNotification, object: nil)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -163,24 +155,21 @@ extension ViewController{
     
     //键盘跟随
     @objc func keyboardFrameChanged(notification: NSNotification) {
+        
         let dict = NSDictionary(dictionary: notification.userInfo!)
         let keyboardValue = dict.objectForKey(UIKeyboardFrameEndUserInfoKey) as! NSValue
-        let bottomDistance = UIScreen.mainScreen().bounds.size.height - keyboardValue.CGRectValue().origin.y
+        let bottomDistance = UIScreen.mainScreen().bounds.height - keyboardValue.CGRectValue().origin.y
         let duration = Double(dict.objectForKey(UIKeyboardAnimationDurationUserInfoKey) as! NSNumber)
-//      self.chatTableView.contentOffset.y = self.chatTableView.contentSize.height - self.chatTableView.zz_height
-        print(bottomDistance)
+        
         UIView.animateWithDuration(duration, animations: {
-               self.inputViewConstraint?.updateOffset(-bottomDistance)
-               self.view.layoutIfNeeded()
-               if bottomDistance>100{
-                    self.scrollToBottom(animated: false)
-               }else{
-                   self.chatTableView.scrollToBottom(animation: false)
-               }
-            }, completion: { (value:Bool) in
+            self.view.transform = CGAffineTransformMakeTranslation(0, -bottomDistance)
+            self.view.layoutIfNeeded()
+            }, completion: {
+                (value: Bool) in
+                self.chatTableView.scrollToBottom(animation: true)
         })
     }
-    
+
     func handleTouches(sender:UITapGestureRecognizer){
         if sender.locationInView(self.view).y < self.view.bounds.height{
             UIApplication.sharedApplication().sendAction(Selector("resignFirstResponder"), to: nil, from: nil, forEvent: nil)
@@ -215,13 +204,13 @@ extension ViewController:UITableViewDataSource,UITableViewDelegate{
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let model = dataArray[indexPath.row]
-        if model.from == .Me {
-            let cell:ZZRightMsgCell = tableView.dequeueReusableCellWithIdentifier(rightCellId) as! ZZRightMsgCell
-            cell.configUIWithModel(model)
+        if model.model.from == .Me {
+            let cell:ZZRightChatCell = tableView.dequeueReusableCellWithIdentifier(rightCellId) as! ZZRightChatCell
+            cell.charFrame = model
             return cell
         }else {
-            let cell:ZZLeftMsgCell = tableView.dequeueReusableCellWithIdentifier(leftCellId) as! ZZLeftMsgCell
-            cell.configUIWithModel(model)
+            let cell:ZZLeftChatCell = tableView.dequeueReusableCellWithIdentifier(leftCellId) as! ZZLeftChatCell
+            cell.charFrame = model
             return cell
         }
     }
@@ -232,6 +221,10 @@ extension ViewController:UITableViewDataSource,UITableViewDelegate{
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         self.view.endEditing(true)
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return dataArray[indexPath.row].cellHeight
     }
 }
 
