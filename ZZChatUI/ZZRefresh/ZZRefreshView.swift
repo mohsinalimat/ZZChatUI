@@ -50,6 +50,16 @@ class ZZRefreshView: UIView,UIScrollViewDelegate {
     
     //计算进度
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView.contentSize.height <= scrollView.zz_height{
+            var inSet = scrollView.contentInset
+            inSet.top = 34
+            scrollView.contentInset = inSet
+        }else{
+            var inSet = scrollView.contentInset
+            inSet.top = 64
+            scrollView.contentInset = inSet
+
+        }
         if isAnimating{
             return
         }

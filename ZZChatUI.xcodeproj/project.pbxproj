@@ -12,6 +12,10 @@
 		203C016E1C3D2FB900DC6FE9 /* ZZLeftChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C016D1C3D2FB900DC6FE9 /* ZZLeftChatCell.swift */; };
 		203C01701C3D304400DC6FE9 /* ZZChatFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C016F1C3D304400DC6FE9 /* ZZChatFrame.swift */; };
 		203C01721C3D369100DC6FE9 /* ZZRightChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C01711C3D369100DC6FE9 /* ZZRightChatCell.swift */; };
+		203C017A1C3E2B1000DC6FE9 /* ZZCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C01791C3E2B1000DC6FE9 /* ZZCoreDataStack.swift */; };
+		203C017D1C3E2BDD00DC6FE9 /* ZZMessageModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 203C017B1C3E2BDD00DC6FE9 /* ZZMessageModel.xcdatamodeld */; };
+		203C01851C3E2D5900DC6FE9 /* ZZMessage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C01831C3E2D5900DC6FE9 /* ZZMessage+CoreDataProperties.swift */; };
+		203C01861C3E2D5900DC6FE9 /* ZZMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203C01841C3E2D5900DC6FE9 /* ZZMessage.swift */; };
 		20D0D0521C3BB2970086B213 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D0D0511C3BB2970086B213 /* AppDelegate.swift */; };
 		20D0D0541C3BB2970086B213 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D0D0531C3BB2970086B213 /* ViewController.swift */; };
 		20D0D0571C3BB2970086B213 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20D0D0551C3BB2970086B213 /* Main.storyboard */; };
@@ -52,6 +56,10 @@
 		203C016D1C3D2FB900DC6FE9 /* ZZLeftChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZZLeftChatCell.swift; sourceTree = "<group>"; };
 		203C016F1C3D304400DC6FE9 /* ZZChatFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZZChatFrame.swift; sourceTree = "<group>"; };
 		203C01711C3D369100DC6FE9 /* ZZRightChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZZRightChatCell.swift; sourceTree = "<group>"; };
+		203C01791C3E2B1000DC6FE9 /* ZZCoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZZCoreDataStack.swift; sourceTree = "<group>"; };
+		203C017C1C3E2BDD00DC6FE9 /* ZZMessageModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ZZMessageModel.xcdatamodel; sourceTree = "<group>"; };
+		203C01831C3E2D5900DC6FE9 /* ZZMessage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZZMessage+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		203C01841C3E2D5900DC6FE9 /* ZZMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZZMessage.swift; sourceTree = "<group>"; };
 		20D0D04E1C3BB2970086B213 /* ZZChatUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZZChatUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20D0D0511C3BB2970086B213 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20D0D0531C3BB2970086B213 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +138,33 @@
 			path = ChatCell;
 			sourceTree = "<group>";
 		};
+		203C01781C3E2A5D00DC6FE9 /* ZZCoreData */ = {
+			isa = PBXGroup;
+			children = (
+				203C01821C3E2D5900DC6FE9 /* Entity */,
+				203C017E1C3E2CE100DC6FE9 /* Common */,
+				203C01791C3E2B1000DC6FE9 /* ZZCoreDataStack.swift */,
+				203C017B1C3E2BDD00DC6FE9 /* ZZMessageModel.xcdatamodeld */,
+			);
+			path = ZZCoreData;
+			sourceTree = "<group>";
+		};
+		203C017E1C3E2CE100DC6FE9 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		203C01821C3E2D5900DC6FE9 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				203C01831C3E2D5900DC6FE9 /* ZZMessage+CoreDataProperties.swift */,
+				203C01841C3E2D5900DC6FE9 /* ZZMessage.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
 		20D0D0451C3BB2970086B213 = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +190,7 @@
 		20D0D0501C3BB2970086B213 /* ZZChatUI */ = {
 			isa = PBXGroup;
 			children = (
+				203C01781C3E2A5D00DC6FE9 /* ZZCoreData */,
 				203C01591C3CE53500DC6FE9 /* ZZRefresh */,
 				20D0D0801C3BB2C30086B213 /* ZZChat */,
 				20D0D0511C3BB2970086B213 /* AppDelegate.swift */,
@@ -391,10 +427,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				203C017A1C3E2B1000DC6FE9 /* ZZCoreDataStack.swift in Sources */,
+				203C01861C3E2D5900DC6FE9 /* ZZMessage.swift in Sources */,
 				203C015B1C3CE56C00DC6FE9 /* ZZRefreshView.swift in Sources */,
 				203C016E1C3D2FB900DC6FE9 /* ZZLeftChatCell.swift in Sources */,
 				20D0D0881C3BBFF80086B213 /* ZZLeftMsgCell.swift in Sources */,
 				203C015F1C3D031400DC6FE9 /* ZZTableView.swift in Sources */,
+				203C01851C3E2D5900DC6FE9 /* ZZMessage+CoreDataProperties.swift in Sources */,
 				20D0D0821C3BB2E80086B213 /* Extension+Add.swift in Sources */,
 				20D0D08E1C3BCA2E0086B213 /* ZZMessageView.swift in Sources */,
 				20D0D0541C3BB2970086B213 /* ViewController.swift in Sources */,
@@ -403,6 +442,7 @@
 				20D0D08C1C3BC9D90086B213 /* ZZLabel.swift in Sources */,
 				20D0D0861C3BBA650086B213 /* ZZModel.swift in Sources */,
 				203C01721C3D369100DC6FE9 /* ZZRightChatCell.swift in Sources */,
+				203C017D1C3E2BDD00DC6FE9 /* ZZMessageModel.xcdatamodeld in Sources */,
 				20D0D0841C3BB32E0086B213 /* ZZInputView.swift in Sources */,
 				20D0D08A1C3BC2670086B213 /* ZZRightMsgCell.swift in Sources */,
 			);
@@ -657,6 +697,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		203C017B1C3E2BDD00DC6FE9 /* ZZMessageModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				203C017C1C3E2BDD00DC6FE9 /* ZZMessageModel.xcdatamodel */,
+			);
+			currentVersion = 203C017C1C3E2BDD00DC6FE9 /* ZZMessageModel.xcdatamodel */;
+			path = ZZMessageModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 20D0D0461C3BB2970086B213 /* Project object */;
 }

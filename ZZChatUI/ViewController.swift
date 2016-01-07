@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         zzinputView = ZZInputView()
         self.view.addSubview(zzinputView)
         
-        self.dataArray =  ZZModel.creatRandomArray(count: 10) //随机产生10条信息
+        self.dataArray =  ZZModel.creatRandomArray(count: 2) //随机产生10条信息
 //      zzinputView.frame = CGRectMake(0,  self.view.zz_height-46, self.view.zz_width , 46)
         zzinputView.snp_makeConstraints { (make) -> Void in
             make.leading.trailing.equalTo(self.view)
@@ -64,7 +64,7 @@ class ViewController: UIViewController {
         chatTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         chatTableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.Interactive
         self.view.addSubview(chatTableView)
-        
+        self.view.bringSubviewToFront(zzinputView)
         chatTableView.snp_makeConstraints { (make) -> Void in
             make.leading.trailing.equalTo(self.view)
             make.top.equalTo(self.snp_topLayoutGuideTop)
@@ -90,7 +90,7 @@ class ViewController: UIViewController {
             self?.chatTableView.fromSend = false  //刷新需要修改
             //延时一秒 模拟网络等待
             delay(1, completion: { () -> () in
-                let array = ZZModel.creatRandomArray(count: 10)
+                let array = ZZModel.creatRandomArray(count: 2)
 //                var indexPaths:[NSIndexPath] = []
                 var i = 0
                 for arr in array{
@@ -116,12 +116,15 @@ class ViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         //将tableview 划到底部
-        self.chatTableView.contentOffset.y = self.chatTableView.contentSize.height - self.chatTableView.zz_height
+        if self.chatTableView.contentSize.height > self.chatTableView.zz_height{
+            self.chatTableView.contentOffset.y = self.chatTableView.contentSize.height - self.chatTableView.zz_height
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardFrameChanged:"), name:UIKeyboardWillChangeFrameNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyBoardShow:"), name:UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyBoardHide:"), name:UIKeyboardWillHideNotification, object: nil)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -149,24 +152,67 @@ class ViewController: UIViewController {
         let indexPath = NSIndexPath(forRow:finalRow, inSection: 0)
         self.chatTableView.scrollToRowAtIndexPath(indexPath,atScrollPosition: UITableViewScrollPosition.Bottom, animated:animated)
     }
+    
+    //最后一个cell的高度
+    func lastHeight()->CGFloat?{
+        let rows = self.chatTableView.numberOfRowsInSection(0)
+        if rows == 0 {
+            return 0
+        }
+        let finalRow = max(0,rows-1)
+        let indexPath = NSIndexPath(forRow:finalRow, inSection: 0)
+        if let cell = self.chatTableView.cellForRowAtIndexPath(indexPath) {
+            return CGRectGetMaxY(cell.frame)
+        }else{
+            return nil
+        }
+    }
+    
 }
 
 extension ViewController{
     
     //键盘跟随
-    @objc func keyboardFrameChanged(notification: NSNotification) {
+    func keyBoardShow(notification: NSNotification) {
+        var deltY:CGFloat = 0
+        if self.chatTableView.zz_height-self.zzinputView.zz_height > self.chatTableView.contentSize.height{
+            deltY = self.chatTableView.zz_height - self.zzinputView.zz_height - self.chatTableView.contentSize.height
+        }
         
         let dict = NSDictionary(dictionary: notification.userInfo!)
         let keyboardValue = dict.objectForKey(UIKeyboardFrameEndUserInfoKey) as! NSValue
         let bottomDistance = UIScreen.mainScreen().bounds.height - keyboardValue.CGRectValue().origin.y
         let duration = Double(dict.objectForKey(UIKeyboardAnimationDurationUserInfoKey) as! NSNumber)
+
+        if bottomDistance <= deltY{
+            return
+        }else{
+            UIView.animateWithDuration(duration, animations: {
+                if deltY <= 0{
+                    self.view.transform = CGAffineTransformMakeTranslation(0, -bottomDistance)
+                }else{
+                    self.view.transform = CGAffineTransformMakeTranslation(0, -bottomDistance+deltY)
+                    self.zzinputView.transform = CGAffineTransformMakeTranslation(0, -deltY)
+                }
+                self.view.layoutIfNeeded()
+                }, completion: {
+                    (value: Bool) in
+//                 self.scrollToBottom(animation: true)
+            })
+        }
+    }
+    
+    func keyBoardHide(notification: NSNotification) {
         
+        let dict = NSDictionary(dictionary: notification.userInfo!)
+        let duration = Double(dict.objectForKey(UIKeyboardAnimationDurationUserInfoKey) as! NSNumber)
         UIView.animateWithDuration(duration, animations: {
-            self.view.transform = CGAffineTransformMakeTranslation(0, -bottomDistance)
+            self.view.transform = CGAffineTransformIdentity
+            self.zzinputView.transform = CGAffineTransformIdentity
             self.view.layoutIfNeeded()
             }, completion: {
                 (value: Bool) in
-                self.chatTableView.scrollToBottom(animation: true)
+//             self.scrollToBottom(animation: true)
         })
     }
 
@@ -175,7 +221,6 @@ extension ViewController{
             UIApplication.sharedApplication().sendAction(Selector("resignFirstResponder"), to: nil, from: nil, forEvent: nil)
         }
     }
-    
     
     func setTableViewInsetsWithBottomValue(bottom:CGFloat){
         let insets = self.tableViewInsetsWithBottomValue(bottom)
